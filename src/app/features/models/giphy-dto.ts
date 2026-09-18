@@ -4,9 +4,19 @@ export interface GiphyDto {
   url: string;
   username: string;
   import_datetime: string;
+  user?: {
+    display_name: string;
+  };
   images: {
     fixed_width_downsampled: { url: string; webp?: string };
-    original: { url: string; width: string; height: string; size: string };
+    original: {
+      url: string;
+      width: string;
+      height: string;
+      size: string;
+      webp?: string;
+      webp_size?: string;
+    };
   };
 }
 
