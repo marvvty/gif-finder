@@ -1,0 +1,48 @@
+@use 'theme' as *;
+
+.details {
+  display: flex;
+  gap: $spacing-xl;
+  align-items: center;
+
+  &__img {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: $radius-md;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: $spacing-md;
+    color: $primary;
+  }
+
+  &__gif-info {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-large;
+  }
+
+  &__size {
+    font-size: $font-size-md;
+    color: $gray;
+  }
+
+  &__username {
+    font-size: $font-size-md;
+    color: $gray;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+  }
+}
