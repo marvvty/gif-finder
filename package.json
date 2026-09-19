@@ -10,7 +10,9 @@
     "serve:ssr:gif-finder": "node dist/gif-finder/server/server.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:styles": "stylelint \"src/**/*.scss\""
   },
   "private": true,
   "packageManager": "npm@11.17.0",
@@ -33,16 +35,30 @@
     "@angular/build": "^21.0.3",
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.0",
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "angular-eslint": "^22.5.0",
+    "eslint": "^10.11.0",
     "husky": "^9.1.7",
     "jsdom": "^27.1.0",
     "lint-staged": "^17.5.1",
     "prettier": "^3.9.8",
+    "stylelint": "^17.15.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "~5.9.2",
+    "typescript-eslint": "^8.70.0",
     "vitest": "^4.0.8"
   },
   "lint-staged": {
-    "*.{ts,html,scss,css,json,md,js,mjs}": "prettier --write"
+    "*.{ts,html}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.scss": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{css,json,md,js,mjs}": "prettier --write"
   }
 }
