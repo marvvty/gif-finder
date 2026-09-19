@@ -1,9 +1,9 @@
 <button
-  [className]="`btn btn-${variant()}`"
+  [className]="`btn btn--${variant()}`"
   [type]="type()"
   [attr.aria-label]="ariaLabel()"
+  [disabled]="isDisabled()"
   (click)="onClick()"
-  [disabled]="disabled()"
 >
   <ng-content />
   {{ label() }}

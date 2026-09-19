@@ -1,31 +1,5 @@
 @use 'theme' as *;
 
-.state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-md;
-  min-height: 50vh;
-  text-align: center;
-
-  &__text {
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    color: $primary;
-  }
-
-  &__hint {
-    font-size: $font-size-xs;
-    color: $muted;
-  }
-
-  &__spinner {
-    color: $muted;
-    animation: spin 1s linear infinite;
-  }
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -34,11 +8,5 @@
 
   &__more {
     margin-bottom: $spacing-md;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
   }
 }

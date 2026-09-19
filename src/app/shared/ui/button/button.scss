@@ -5,61 +5,59 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: $font-family-main;
-  transition: all 0.2s ease;
-  border-radius: 20px;
-  gap: $spacing-sm;
-
-  max-width: 362px;
+  gap: $spacing-xs;
   width: 100%;
-  height: 50px;
-  border-radius: 16px;
-}
-
-.btn-primary {
-  padding: $spacing-xs $spacing-lg;
-  font-size: $font-size-sm;
-  background-color: $primary;
-  color: $gray;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:active {
-    border-radius: 10px;
-    background-color: color.adjust($primary, $lightness: -10%);
-  }
+  max-width: $button-max-width;
+  height: $control-height;
+  font-family: $font-family-main;
+  border-radius: $radius-lg;
+  transition:
+    background-color $transition-base,
+    border-color $transition-base,
+    border-radius $transition-base,
+    opacity $transition-base;
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-}
 
-.btn-primary,
-.btn-icon {
-  background-color: $primary;
-  border-radius: 1.25rem;
-  color: $paper;
+  &--primary,
+  &--icon {
+    background-color: $primary;
+    color: $paper;
+    border-radius: $radius-xl;
 
-  &:hover {
-    border-radius: $spacing-md;
+    &:hover:not(:disabled) {
+      border-radius: $radius-lg;
+    }
+
+    &:active:not(:disabled) {
+      border-radius: $radius-md;
+      background-color: color.adjust($primary, $lightness: -10%);
+    }
   }
-}
 
-.btn-secondary {
-  background-color: transparent;
-  padding: $spacing-sm $spacing-xs;
-  border: 1px solid $light-gray;
-  color: $primary;
-
-  &:hover:not(:disabled) {
-    background-color: $paper;
-    border-color: $primary;
+  &--primary {
+    padding: $spacing-sm $spacing-lg;
+    font-size: $font-size-md;
   }
-}
 
-.btn-icon {
-  width: var(--btn-size, 50px);
-  height: var(--btn-size, 50px);
-  padding: 0;
+  &--icon {
+    width: var(--btn-size, #{$control-height});
+    height: var(--btn-size, #{$control-height});
+    padding: 0;
+  }
+
+  &--secondary {
+    padding: $spacing-xs $spacing-sm;
+    background-color: transparent;
+    border: 1px solid $light-gray;
+    color: $primary;
+
+    &:hover:not(:disabled) {
+      background-color: $paper;
+      border-color: $primary;
+    }
+  }
 }

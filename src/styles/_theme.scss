@@ -1,41 +1,41 @@
 $primary: #161615;
-$secondary: #ede6dc;
-$general: #0000;
-$error: #f38b8b;
-$success: #8bf39cff;
-$warning: #0000;
-$white: #fff;
-$black: #000;
-$gray: rgba(255, 255, 255, 0.42);
-$light-gray: #777;
-$muted: #615e5b;
 $paper: #f8f7f4;
+$white: #fff;
+$muted: #615e5b;
+$light-gray: #707070;
+$error: #f38b8b;
+
+$border-subtle: rgba($primary, 0.12);
+$shadow-hover: 0 0.625rem 1.875rem rgba($primary, 0.12);
 
 $font-family-main: 'DM Sans', sans-serif;
 
-$font-size-label: 0.7rem;
-$font-size-xs: 1rem;
-$font-size-sm: 1.125rem;
-$font-size-md: 1.25rem;
-$font-size-lg: 1.5rem;
-$font-size-xl: 2.25rem;
-$font-size-xxl: 2.5rem;
-$font-size-xxxl: 4rem;
+$font-size-xs: 0.7rem;
+$font-size-sm: 1rem;
+$font-size-md: 1.125rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-xxl: 2.25rem;
 
-$spacing-sm: 0.625rem;
-$spacing-xs: 0.875rem;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+$spacing-xs: 0.625rem;
+$spacing-sm: 0.875rem;
 $spacing-md: 1rem;
 $spacing-lg: 1.25rem;
 $spacing-xl: 2rem;
 
-$radius-sm: 0.25rem;
-$radius-md: 0.5rem;
+$radius-sm: 0.5rem;
+$radius-md: 0.625rem;
 $radius-lg: 1rem;
-$radius-xl: 1.625rem;
+$radius-xl: 1.25rem;
 
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-large: 600;
-$font-weight-bold: 700;
+$transition-fast: 0.18s ease;
+$transition-base: 0.2s ease;
 
+$control-height: 3.125rem;
+$button-max-width: 22.625rem;
 $container-width: 1200px;
+
+$breakpoint-md: 48rem;

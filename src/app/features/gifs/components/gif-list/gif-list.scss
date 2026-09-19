@@ -7,10 +7,5 @@
 
 .gif-list {
   columns: 4 220px;
-  column-gap: clamp($spacing-sm, 2vw, $spacing-md);
-}
-
-.gif-list > gfd-gif-item {
-  display: block;
-  margin-bottom: clamp($spacing-sm, 2vw, $spacing-md);
+  column-gap: clamp($spacing-xs, 2vw, $spacing-md);
 }
