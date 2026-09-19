@@ -1,7 +1,7 @@
 <form class="header" (submit)="onSubmit($event)">
   <gfd-input
     placeholder="Search for gifs"
-    [value]="searchTerm()"
+    [(value)]="searchTerm"
     [invalid]="invalid()"
     [touched]="isSubmited()"
   />
