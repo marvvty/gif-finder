@@ -1,42 +1,57 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
   computed,
-  signal,
+  inject,
+  linkedSignal,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { Input } from '../../shared/ui/input/input';
-import { Button } from '../../shared/ui/button/button';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
+import { TextField } from '../../shared/ui/text-field/text-field';
+import { Button } from '../../shared/ui/button/button';
 
 @Component({
   selector: 'gfd-header',
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
-  imports: [Input, Button, NgIcon, RouterLink],
+  imports: [TextField, Button, NgIcon, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
-  protected readonly svg = lucideSearch;
+  protected readonly searchIcon = lucideSearch;
 
-  readonly searchTerm = signal('');
-  readonly isSubmited = signal(false);
-  readonly invalid = computed(() => this.searchTerm().length === 0);
+  private readonly queryFromUrl = toSignal(
+    this.route.queryParamMap.pipe(map((params) => params.get('q') ?? '')),
+    { initialValue: '' },
+  );
 
-  onSubmit(event: Event): void {
+  protected readonly searchTerm = linkedSignal(() => this.queryFromUrl());
+
+  protected readonly isInvalid = computed(
+    () => this.searchTerm().trim() === '',
+  );
+
+  protected readonly isSubmitted = linkedSignal<string, boolean>({
+    source: this.searchTerm,
+    computation: () => false,
+  });
+
+  protected onSubmit(event: Event): void {
     event.preventDefault();
+    this.isSubmitted.set(true);
 
-    this.isSubmited.set(true);
-    const q = this.searchTerm().trim();
+    const query = this.searchTerm().trim();
 
-    if (!q) return;
+    if (!query) {
+      return;
+    }
 
-    this.router.navigate(['/'], {
-      queryParams: { q },
-    });
+    this.router.navigate(['/'], { queryParams: { q: query } });
   }
 }

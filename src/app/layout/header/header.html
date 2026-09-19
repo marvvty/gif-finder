@@ -4,15 +4,16 @@
       <img src="/logo/logo.svg" alt="GIF Finder Logo" />
     </a>
     <form class="form" (submit)="onSubmit($event)">
-      <gfd-input
+      <gfd-text-field
         class="form__input"
         placeholder="Search for gifs"
+        errorMessage="Enter a keyword to search"
         [(value)]="searchTerm"
-        [invalid]="invalid()"
-        [touched]="isSubmited()"
+        [isInvalid]="isInvalid()"
+        [isTouched]="isSubmitted()"
       />
       <gfd-button type="submit" variant="icon" ariaLabel="Search">
-        <ng-icon [svg]="svg" size="20"></ng-icon>
+        <ng-icon [svg]="searchIcon" size="20" />
       </gfd-button>
     </form>
   </div>

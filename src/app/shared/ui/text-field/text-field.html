@@ -1,0 +1,21 @@
+<input
+  class="text-field"
+  [class.text-field--invalid]="isInvalid() && isTouched()"
+  [type]="type()"
+  [placeholder]="placeholder()"
+  [attr.aria-label]="ariaLabel() || placeholder()"
+  [attr.aria-invalid]="isInvalid() && isTouched() ? 'true' : null"
+  [attr.aria-describedby]="
+    isInvalid() && isTouched() && errorMessage() ? 'text-field-error' : null
+  "
+  [value]="value()"
+  [disabled]="isDisabled()"
+  (input)="onInput($event)"
+  (blur)="touch.emit()"
+/>
+
+@if (isInvalid() && isTouched() && errorMessage()) {
+  <p class="text-field__error" id="text-field-error" role="alert">
+    {{ errorMessage() }}
+  </p>
+}

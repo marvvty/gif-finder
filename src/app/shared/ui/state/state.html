@@ -1,0 +1,15 @@
+<div class="state">
+  @if (isLoading()) {
+    <ng-icon class="state__spinner" [svg]="loaderIcon" size="38" />
+  }
+
+  @if (text()) {
+    <p class="state__text">{{ text() }}</p>
+  }
+
+  @if (hint()) {
+    <p class="state__hint">{{ hint() }}</p>
+  }
+
+  <ng-content />
+</div>
