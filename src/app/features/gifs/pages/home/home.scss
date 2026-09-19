@@ -1,0 +1,12 @@
+.status {
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  align-items: center;
+  justify-content: center;
+}

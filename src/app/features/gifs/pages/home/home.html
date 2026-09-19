@@ -1,0 +1,22 @@
+@if (gifs.isLoading()) {
+  <p class="status">Loading...</p>
+  <ng-icon [svg]="svg" size="38"></ng-icon>
+} @else if (gifs.error()) {
+  <p class="status">Try again later</p>
+  <gfd-button
+    type="button"
+    (click)="gifs.reload()"
+    label="Try Again"
+  ></gfd-button>
+} @else if (gifs.value().length === 0) {
+  <p class="home__status">Nothing found for "{{ query() }}"</p>
+} @else {
+  <div class="content">
+    <gfd-gif-list [gifs]="gifs.value()" />
+    <gfd-button
+      type="button"
+      (click)="gifs.reload()"
+      label="Load More"
+    ></gfd-button>
+  </div>
+}
