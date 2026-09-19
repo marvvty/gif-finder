@@ -10,12 +10,14 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: $font-family-main;
   line-height: 1.5;
-  background-color: #fff;
+  color: $primary;
+  background-color: $white;
   min-height: 100vh;
 }
 
@@ -59,4 +61,20 @@ select {
 
 :focus {
   outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
