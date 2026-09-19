@@ -22,7 +22,7 @@ export class Home {
   protected readonly svg = lucideLoader;
 
   protected readonly query = toSignal(
-    this.route.queryParamMap.pipe(map((p) => p.get('q'.trim() ?? ''))),
+    this.route.queryParamMap.pipe(map((p) => p.get('q')?.trim() ?? '')),
     { initialValue: '' },
   );
 

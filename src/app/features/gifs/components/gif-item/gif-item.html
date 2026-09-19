@@ -2,7 +2,7 @@
   <a class="gif-item__link" [routerLink]="['/gif', gif().id]">
     <img
       class="gif-item__img"
-      [src]="gif().previewWebpUrl"
+      [src]="gif().previewWebpUrl || gif().previewUrl"
       [alt]="gif().title || 'GIF'"
       [attr.width]="gif().originalWidth"
       [attr.height]="gif().originalHeight"

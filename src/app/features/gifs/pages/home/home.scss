@@ -1,6 +1,7 @@
+@use 'theme' as *;
+
 .status {
   font-size: $font-size-lg;
-  color: $color-text-secondary;
 }
 
 .content {

@@ -19,6 +19,11 @@
     position: absolute;
     opacity: 0;
     transition: opacity 0.15s;
+
+    &:hover,
+    &:focus-within {
+      opacity: 1;
+    }
   }
 
   &__author {
@@ -33,13 +38,5 @@
     top: $spacing-sm;
     color: $white;
     cursor: pointer;
-  }
-
-  &:host:hover,
-  &:host:focus-within {
-    &__author,
-    &__copy {
-      opacity: 1;
-    }
   }
 }

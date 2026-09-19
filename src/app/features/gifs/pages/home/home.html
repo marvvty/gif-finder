@@ -9,7 +9,7 @@
     label="Try Again"
   ></gfd-button>
 } @else if (gifs.value().length === 0) {
-  <p class="home__status">Nothing found for "{{ query() }}"</p>
+  <p class="status">Nothing found for "{{ query() }}"</p>
 } @else {
   <div class="content">
     <gfd-gif-list [gifs]="gifs.value()" />
