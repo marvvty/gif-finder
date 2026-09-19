@@ -11,15 +11,14 @@
     />
   </a>
 
-  @if (gif().author) {
-    <span class="gif-item__author">By: {{ gif().author }}</span>
-  }
+  <span class="gif-item__author">By: {{ gif().author || 'Anonymous' }}</span>
 
   <gfd-button
     class="gif-item__copy"
     type="button"
-    (click)="copyLinkToClipboard()"
-    aria-label="Copy Link"
+    variant="icon"
+    ariaLabel="Copy link"
+    (btnClick)="copyLinkToClipboard()"
   >
     <ng-icon [svg]="svg" size="18"></ng-icon>
   </gfd-button>
