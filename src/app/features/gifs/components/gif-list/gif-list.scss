@@ -1,0 +1,12 @@
+@use 'theme' as *;
+
+.gif-list {
+  columns: 4 200px;
+  column-gap: $spacing-sm;
+}
+.gif-list > gfd-gif-item {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
