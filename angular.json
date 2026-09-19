@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "gfd",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
