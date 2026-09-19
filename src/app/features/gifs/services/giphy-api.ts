@@ -3,14 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { GiphySearchResponse, GiphyByIdResponse } from '../models/giphy-dto';
-import { Gif, toGif } from '../models/giphy-mapper';
-import { PAGE_SIZE } from '../models/giphy.constant';
-
-export interface GiphyPage {
-  items: Gif[];
-  totalCount: number;
-  offset: number;
-}
+import { Gif, GifPage, toGif } from '../models/giphy-mapper';
+import { SAFE_RATING } from '../models/giphy.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -20,14 +14,14 @@ export class GiphyApi {
 
   searchGifs(
     query: string,
-    limit: number = PAGE_SIZE,
-    offset: number = 0,
-  ): Observable<GiphyPage> {
+    limit: number,
+    offset: number,
+  ): Observable<GifPage> {
     const params = new HttpParams()
-      .set('api_key', environment.apiKey)
       .set('q', query)
       .set('limit', limit)
-      .set('offset', offset);
+      .set('offset', offset)
+      .set('rating', SAFE_RATING);
 
     return this.httpClient
       .get<GiphySearchResponse>(`${environment.apiUrl}/search`, { params })
@@ -41,11 +35,8 @@ export class GiphyApi {
   }
 
   getGifById(id: string): Observable<Gif> {
-    const params = new HttpParams().set('api_key', environment.apiKey);
     return this.httpClient
-      .get<GiphyByIdResponse>(`${environment.apiUrl}/${id}`, {
-        params,
-      })
+      .get<GiphyByIdResponse>(`${environment.apiUrl}/${id}`)
       .pipe(map((response) => toGif(response.data)));
   }
 }

@@ -7,30 +7,34 @@ import {
   linkedSignal,
 } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { NgIcon } from '@ng-icons/core';
 import { GifList } from '../../components/gif-list/gif-list';
-import { GiphyApi, GiphyPage } from '../../services/giphy-api';
-import { lucideLoader } from '@ng-icons/lucide';
+import { GiphyApi } from '../../services/giphy-api';
+import { Gif, GifPage } from '../../models/giphy-mapper';
+import {
+  DEFAULT_QUERY,
+  MAX_OFFSET,
+  PAGE_SIZE,
+} from '../../models/giphy.constant';
 import { Button } from '../../../../shared/ui/button/button';
-import { DEFAULT_QUERY, PAGE_SIZE } from '../../models/giphy.constant';
-import { Gif } from '../../models/giphy-mapper';
+import { State } from '../../../../shared/ui/state/state';
 
 @Component({
   selector: 'gfd-home',
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  imports: [GifList, NgIcon, Button],
+  imports: [GifList, Button, State],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {
   private readonly api = inject(GiphyApi);
 
-  protected readonly svg = lucideLoader;
+  readonly q = input('', {
+    transform: (value: string | undefined) => value ?? '',
+  });
 
-  readonly q = input('');
-  protected readonly query = computed(() => this.q()?.trim() || DEFAULT_QUERY);
+  private readonly query = computed(() => this.q().trim() || DEFAULT_QUERY);
 
-  protected readonly offset = linkedSignal({
+  private readonly offset = linkedSignal({
     source: this.query,
     computation: () => 0,
   });
@@ -41,32 +45,43 @@ export class Home {
       this.api.searchGifs(params.query, PAGE_SIZE, params.offset),
   });
 
-  private readonly loadedPage = computed(() =>
-    this.page.hasValue() ? this.page.value() : undefined,
-  );
+  protected readonly gifs = linkedSignal<GifPage | undefined, Gif[]>({
+    source: () => (this.page.hasValue() ? this.page.value() : undefined),
+    computation: (page, previous) => {
+      const loaded = previous?.value ?? [];
 
-  protected readonly gifs = linkedSignal<GiphyPage | undefined, Gif[]>({
-    source: this.loadedPage,
-    computation: (page, prev) => {
-      const accumulated = prev?.value ?? [];
+      if (!page) {
+        return loaded;
+      }
 
-      if (!page) return accumulated;
+      if (page.offset === 0) {
+        return page.items;
+      }
 
-      return page.offset === 0 ? page.items : [...accumulated, ...page.items];
+      const loadedIds = new Set(loaded.map((gif) => gif.id));
+
+      return [...loaded, ...page.items.filter((gif) => !loadedIds.has(gif.id))];
     },
   });
 
-  protected readonly totalCount = linkedSignal<GiphyPage | undefined, number>({
-    source: this.loadedPage,
+  private readonly totalCount = linkedSignal<GifPage | undefined, number>({
+    source: () => (this.page.hasValue() ? this.page.value() : undefined),
     computation: (page, previous) => page?.totalCount ?? previous?.value ?? 0,
   });
 
+  protected readonly isEmpty = computed(() => this.gifs().length === 0);
+
+  protected readonly emptyMessage = computed(
+    () => `Nothing found for "${this.query()}"`,
+  );
+
   protected readonly hasMore = computed(
-    () => this.gifs().length > 0 && this.gifs().length < this.totalCount(),
+    () =>
+      this.gifs().length < this.totalCount() &&
+      this.offset() + PAGE_SIZE <= MAX_OFFSET,
   );
 
   protected loadMore(): void {
-    if (this.page.isLoading()) return;
     this.offset.update((offset) => offset + PAGE_SIZE);
   }
 }

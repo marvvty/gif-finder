@@ -1,29 +1,29 @@
-@if (page.isLoading() && gifs().length === 0) {
-  <div class="state">
-    <ng-icon class="state__spinner" [svg]="svg" size="38"></ng-icon>
-    <p class="state__text">Loading...</p>
-  </div>
-} @else if (page.error() && gifs().length === 0) {
-  <div class="state">
-    <p class="state__text">Try again later</p>
-    <gfd-button type="button" (btnClick)="page.reload()" label="Try Again" />
-  </div>
-} @else if (gifs().length === 0) {
-  <div class="state">
-    <p class="state__text">Nothing found for "{{ query() }}"</p>
-    <p class="state__hint">Try a different keyword.</p>
-  </div>
+@if (page.isLoading() && isEmpty()) {
+  <gfd-state isLoading text="Loading..." />
+} @else if (page.error() && isEmpty()) {
+  <gfd-state text="Try again later">
+    <gfd-button label="Try Again" (btnClick)="page.reload()" />
+  </gfd-state>
+} @else if (isEmpty()) {
+  <gfd-state [text]="emptyMessage()" hint="Try a different keyword." />
 } @else {
   <div class="content">
     <gfd-gif-list [gifs]="gifs()" />
 
-    @if (hasMore()) {
+    @if (page.error()) {
       <gfd-button
-        type="button"
+        class="content__more"
         variant="secondary"
-        (btnClick)="loadMore()"
+        label="Try Again"
+        (btnClick)="page.reload()"
+      />
+    } @else if (hasMore()) {
+      <gfd-button
+        class="content__more"
+        variant="secondary"
         label="Load More"
-        [disabled]="page.isLoading()"
+        [isDisabled]="page.isLoading()"
+        (btnClick)="loadMore()"
       />
     }
   </div>

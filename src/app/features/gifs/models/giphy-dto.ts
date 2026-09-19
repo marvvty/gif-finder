@@ -15,7 +15,6 @@ export interface GiphyDto {
       height: string;
       size: string;
       webp?: string;
-      webp_size?: string;
     };
   };
 }

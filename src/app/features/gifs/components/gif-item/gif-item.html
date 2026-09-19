@@ -2,8 +2,8 @@
   <a class="gif-item__link" [routerLink]="['/gif', gif().id]">
     <img
       class="gif-item__img"
-      [src]="gif().previewWebpUrl || gif().previewUrl"
-      [alt]="gif().title || 'GIF'"
+      [src]="gif().previewUrl"
+      [alt]="gif().title"
       [attr.width]="gif().originalWidth"
       [attr.height]="gif().originalHeight"
       loading="lazy"
@@ -11,15 +11,20 @@
     />
   </a>
 
-  <span class="gif-item__author">By: {{ gif().author || 'Anonymous' }}</span>
+  <span class="gif-item__author">By: {{ gif().author }}</span>
 
   <gfd-button
     class="gif-item__copy"
-    type="button"
     variant="icon"
-    ariaLabel="Copy link"
-    (btnClick)="copyLinkToClipboard()"
+    [ariaLabel]="copyLabel()"
+    (btnClick)="copyLink()"
   >
-    <ng-icon [svg]="svg" size="18"></ng-icon>
+    <ng-icon [svg]="isCopied() ? checkIcon : linkIcon" size="18" />
   </gfd-button>
+
+  <span class="gif-item__status" role="status" aria-live="polite">
+    @if (isCopied()) {
+      Link copied
+    }
+  </span>
 </div>

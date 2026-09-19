@@ -1,54 +1,72 @@
-@if (item.isLoading()) {
-  <div class="state">
-    <ng-icon class="state__spinner" [svg]="svg.lucideLoader" size="38" />
-  </div>
-} @else if (item.error()) {
-  <div class="state">
-    <p class="state__text">Could not load this GIF</p>
-    <gfd-button label="Try Again" (btnClick)="item.reload()" />
-  </div>
-} @else if (item.hasValue()) {
-  @let gif = item.value();
+@if (gif.isLoading()) {
+  <gfd-state isLoading />
+} @else if (isNotFound()) {
+  <gfd-state
+    text="This GIF does not exist"
+    hint="It may have been removed from Giphy."
+  />
+} @else if (gif.error()) {
+  <gfd-state text="Could not load this GIF">
+    <gfd-button label="Try Again" (btnClick)="gif.reload()" />
+  </gfd-state>
+} @else if (gif.hasValue()) {
+  @let item = gif.value();
 
   <div class="details">
     <div class="details__media">
       <img
         class="details__img"
-        [src]="gif.originalWebpUrl || gif.originalUrl"
-        [alt]="gif.title || 'GIF'"
-        [attr.width]="gif.originalWidth"
-        [attr.height]="gif.originalHeight"
+        [src]="item.displayUrl"
+        [alt]="item.title"
+        [attr.width]="item.originalWidth"
+        [attr.height]="item.originalHeight"
       />
     </div>
 
     <div class="details__info">
-      <h1 class="details__title">{{ gif.title || 'GIF' }}</h1>
+      <h1 class="details__title">{{ item.title }}</h1>
 
-      <p class="details__username">By {{ gif.author || 'Anonymous' }}</p>
+      <p class="details__username">By {{ item.author }}</p>
 
       <div class="details__meta">
         <div class="details__meta-item">
           <span class="details__meta-label">Size</span>
-          <span class="details__meta-value">{{
-            formatSize(gif.sizeBytes)
-          }}</span>
+          <span class="details__meta-value">
+            {{ item.sizeBytes | fileSize }}
+          </span>
         </div>
         <div class="details__meta-item">
           <span class="details__meta-label">Created</span>
           <span class="details__meta-value">
-            {{ (gif.createdAt | date: 'd MMMM y') || 'Unknown' }}
+            @if (item.createdAt) {
+              {{ item.createdAt | date: 'd MMMM y' }}
+            } @else {
+              Unknown
+            }
           </span>
         </div>
       </div>
 
       <div class="details__actions">
-        <gfd-button label="Share" variant="secondary" (btnClick)="share()">
-          <ng-icon [svg]="svg.lucideShare" size="18" />
+        <gfd-button
+          variant="secondary"
+          [label]="shareLabel()"
+          (btnClick)="share()"
+        >
+          <ng-icon [svg]="isCopied() ? checkIcon : shareIcon" size="18" />
         </gfd-button>
         <gfd-button label="Download" (btnClick)="download()">
-          <ng-icon [svg]="svg.lucideDownload" size="18" />
+          <ng-icon [svg]="downloadIcon" size="18" />
         </gfd-button>
       </div>
+
+      <p class="details__status" role="status" aria-live="polite">
+        @if (isCopied()) {
+          Link copied
+        } @else if (hasFailedDownload()) {
+          Download failed, try opening the GIF directly
+        }
+      </p>
     </div>
   </div>
 }

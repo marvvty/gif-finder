@@ -1,11 +1,10 @@
 import { GiphyDto } from './giphy-dto';
 
+const UNTITLED = 'GIF';
+const UNKNOWN_AUTHOR = 'Anonymous';
+
 const toNumber = (value: string): number => {
   return Number(value) || 0;
-};
-
-const orNull = (value: string): string | null => {
-  return value.trim() === '' ? null : value;
 };
 
 const toDate = (value: string): Date | null => {
@@ -13,20 +12,28 @@ const toDate = (value: string): Date | null => {
   return isNaN(date.getTime()) ? null : date;
 };
 
+const toText = (value: string, fallback: string): string => {
+  return value.trim() === '' ? fallback : value;
+};
+
 export interface Gif {
   id: string;
-  title: string | null;
-  pageUrl: string;
-  previewUrl: string;
-  previewWebpUrl: string | null;
-  author: string | null;
+  title: string;
+  author: string;
   createdAt: Date | null;
 
+  previewUrl: string;
+  displayUrl: string;
   originalUrl: string;
-  originalWebpUrl: string | null;
   originalWidth: number;
   originalHeight: number;
   sizeBytes: number;
+}
+
+export interface GifPage {
+  items: Gif[];
+  totalCount: number;
+  offset: number;
 }
 
 export const toGif = (dto: GiphyDto): Gif => {
@@ -35,15 +42,13 @@ export const toGif = (dto: GiphyDto): Gif => {
 
   return {
     id: dto.id,
-    title: orNull(dto.title),
-    pageUrl: dto.url,
-    previewUrl: preview.url,
-    previewWebpUrl: preview.webp ?? null,
-    author: dto.user?.display_name || dto.username || null,
+    title: toText(dto.title, UNTITLED),
+    author: toText(dto.user?.display_name ?? dto.username, UNKNOWN_AUTHOR),
     createdAt: toDate(dto.import_datetime),
 
+    previewUrl: preview.webp ?? preview.url,
+    displayUrl: original.webp ?? original.url,
     originalUrl: original.url,
-    originalWebpUrl: original.webp ?? null,
     originalWidth: toNumber(original.width),
     originalHeight: toNumber(original.height),
     sizeBytes: toNumber(original.size),

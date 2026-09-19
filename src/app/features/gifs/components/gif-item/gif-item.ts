@@ -1,9 +1,19 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
+import { lucideCheck, lucideLink } from '@ng-icons/lucide';
 import { Gif } from '../../models/giphy-mapper';
-import { lucideLink } from '@ng-icons/lucide';
 import { Button } from '../../../../shared/ui/button/button';
+import { ClipboardService } from '../../../../shared/services/clipboard';
+
+const COPIED_FEEDBACK_MS = 2000;
 
 @Component({
   selector: 'gfd-gif-item',
@@ -13,11 +23,26 @@ import { Button } from '../../../../shared/ui/button/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GifItem {
+  private readonly clipboard = inject(ClipboardService);
+
   readonly gif = input.required<Gif>();
 
-  protected readonly svg = lucideLink;
+  protected readonly linkIcon = lucideLink;
+  protected readonly checkIcon = lucideCheck;
 
-  protected copyLinkToClipboard(): void {
-    navigator.clipboard.writeText(this.gif().originalUrl);
+  protected readonly isCopied = signal(false);
+  protected readonly copyLabel = computed(() =>
+    this.isCopied() ? 'Link copied' : 'Copy link',
+  );
+
+  protected async copyLink(): Promise<void> {
+    const copied = await this.clipboard.copy(this.gif().originalUrl);
+
+    if (!copied) {
+      return;
+    }
+
+    this.isCopied.set(true);
+    setTimeout(() => this.isCopied.set(false), COPIED_FEEDBACK_MS);
   }
 }

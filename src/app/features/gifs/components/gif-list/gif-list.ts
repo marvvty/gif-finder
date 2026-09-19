@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Gif } from '../../models/giphy-mapper';
 import { GifItem } from '../gif-item/gif-item';
 
@@ -10,5 +10,5 @@ import { GifItem } from '../gif-item/gif-item';
   imports: [GifItem],
 })
 export class GifList {
-  readonly gifs = input<Gif[]>();
+  readonly gifs = input.required<Gif[]>();
 }
