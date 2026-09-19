@@ -1,6 +1,16 @@
+@use 'theme' as *;
+
 .app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: clamp($spacing-lg, 4vw, $spacing-xl)
+    clamp($spacing-md, 3vw, $spacing-lg);
 }
