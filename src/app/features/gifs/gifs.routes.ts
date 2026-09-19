@@ -11,5 +11,4 @@ export const gifsRoutes: Routes = [
     loadComponent: () =>
       import('./pages/gif-details/gif-details').then((m) => m.GifDetails),
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
