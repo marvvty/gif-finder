@@ -19,6 +19,6 @@ ENV NODE_ENV=production \
 COPY --from=build /app/dist ./dist
 
 USER node
-EXPOSE 4000
+EXPOSE 4200
 
 CMD ["node", "dist/gif-finder/server/server.mjs"]
