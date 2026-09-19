@@ -1,0 +1,11 @@
+@use 'theme' as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 3rem;
+  justify-content: center;
+  gap: $spacing-md;
+  width: 100%;
+}

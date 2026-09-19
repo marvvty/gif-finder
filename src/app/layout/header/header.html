@@ -1,0 +1,9 @@
+<form class="header" (submit)="onSubmit($event)">
+  <gfd-input
+    placeholder="Search for gifs"
+    [value]="searchTerm()"
+    [invalid]="invalid()"
+    [touched]="isSubmited()"
+  />
+  <gfd-button type="submit"><ng-icon [svg]="svg"></ng-icon></gfd-button>
+</form>
