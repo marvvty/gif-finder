@@ -1,0 +1,9 @@
+<button
+  [className]="`btn btn-${variant()}`"
+  [type]="type()"
+  (click)="onClick()"
+  [disabled]="disabled()"
+>
+  <ng-content />
+  {{ label() }}
+</button>
