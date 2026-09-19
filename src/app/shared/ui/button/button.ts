@@ -16,7 +16,8 @@ import type {} from '@ng-icons/lucide';
 export class Button {
   type = input<'button' | 'submit'>('button');
   label = input('');
-  variant = input<'primary' | 'secondary'>('primary');
+  variant = input<'primary' | 'secondary' | 'icon'>('primary');
+  ariaLabel = input<string | undefined>(undefined);
   disabled = input(false);
   btnClick = output<void>();
 

@@ -1,15 +1,19 @@
-<div class="header">
-  <a class="header__logo" routerLink="/">
-    <img src="/logo/logo.svg" alt="GIF Finder Logo" />
-  </a>
-  <form class="form" (submit)="onSubmit($event)">
-    <gfd-input
-      class="form__input"
-      placeholder="Search for gifs"
-      [(value)]="searchTerm"
-      [invalid]="invalid()"
-      [touched]="isSubmited()"
-    />
-    <gfd-button type="submit"><ng-icon [svg]="svg"></ng-icon></gfd-button>
-  </form>
-</div>
+<header class="header">
+  <div class="header__inner">
+    <a class="header__logo" routerLink="/" aria-label="GIF Finder — home">
+      <img src="/logo/logo.svg" alt="GIF Finder Logo" />
+    </a>
+    <form class="form" (submit)="onSubmit($event)">
+      <gfd-input
+        class="form__input"
+        placeholder="Search for gifs"
+        [(value)]="searchTerm"
+        [invalid]="invalid()"
+        [touched]="isSubmited()"
+      />
+      <gfd-button type="submit" variant="icon" ariaLabel="Search">
+        <ng-icon [svg]="svg" size="20"></ng-icon>
+      </gfd-button>
+    </form>
+  </div>
+</header>

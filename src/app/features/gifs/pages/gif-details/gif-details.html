@@ -1,31 +1,48 @@
 @if (item.isLoading()) {
-  <ng-icon [svg]="svg.lucideLoader" size="38" />
+  <div class="state">
+    <ng-icon class="state__spinner" [svg]="svg.lucideLoader" size="38" />
+  </div>
 } @else if (item.error()) {
-  <p class="details__status">Could not load this GIF</p>
-  <gfd-button label="Try Again" (btnClick)="item.reload()" />
+  <div class="state">
+    <p class="state__text">Could not load this GIF</p>
+    <gfd-button label="Try Again" (btnClick)="item.reload()" />
+  </div>
 } @else if (item.hasValue()) {
   @let gif = item.value();
 
   <div class="details">
-    <img
-      class="details__img"
-      [src]="gif.originalWebpUrl || gif.originalUrl"
-      [alt]="gif.title || 'GIF'"
-      [attr.width]="gif.originalWidth"
-      [attr.height]="gif.originalHeight"
-    />
+    <div class="details__media">
+      <img
+        class="details__img"
+        [src]="gif.originalWebpUrl || gif.originalUrl"
+        [alt]="gif.title || 'GIF'"
+        [attr.width]="gif.originalWidth"
+        [attr.height]="gif.originalHeight"
+      />
+    </div>
 
     <div class="details__info">
       <h1 class="details__title">{{ gif.title || 'GIF' }}</h1>
 
       <p class="details__username">By {{ gif.author || 'Anonymous' }}</p>
-      <div class="details__gif-info">
-        <p class="details__size">Size {{ formatSize(gif.sizeBytes) }}</p>
-        <p>Created at {{ (gif.createdAt | date: 'd MMMM y') || 'Unknown' }}</p>
+
+      <div class="details__meta">
+        <div class="details__meta-item">
+          <span class="details__meta-label">Size</span>
+          <span class="details__meta-value">{{
+            formatSize(gif.sizeBytes)
+          }}</span>
+        </div>
+        <div class="details__meta-item">
+          <span class="details__meta-label">Created</span>
+          <span class="details__meta-value">
+            {{ (gif.createdAt | date: 'd MMMM y') || 'Unknown' }}
+          </span>
+        </div>
       </div>
 
       <div class="details__actions">
-        <gfd-button label="Share" (btnClick)="share()">
+        <gfd-button label="Share" variant="secondary" (btnClick)="share()">
           <ng-icon [svg]="svg.lucideShare" size="18" />
         </gfd-button>
         <gfd-button label="Download" (btnClick)="download()">
