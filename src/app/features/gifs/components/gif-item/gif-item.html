@@ -1,0 +1,26 @@
+<div class="gif-item">
+  <a class="gif-item__link" [routerLink]="['/gif', gif().id]">
+    <img
+      class="gif-item__img"
+      [src]="gif().previewWebpUrl"
+      [alt]="gif().title || 'GIF'"
+      [attr.width]="gif().originalWidth"
+      [attr.height]="gif().originalHeight"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+
+  @if (gif().author) {
+    <span class="gif-item__author">By: {{ gif().author }}</span>
+  }
+
+  <gfd-button
+    class="gif-item__copy"
+    type="button"
+    (click)="copyLinkToClipboard()"
+    aria-label="Copy Link"
+  >
+    <ng-icon [svg]="svg" size="18"></ng-icon>
+  </gfd-button>
+</div>
