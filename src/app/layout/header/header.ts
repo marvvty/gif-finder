@@ -5,7 +5,7 @@ import {
   computed,
   signal,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Input } from '../../shared/ui/input/input';
 import { Button } from '../../shared/ui/button/button';
 import { NgIcon } from '@ng-icons/core';
@@ -15,7 +15,7 @@ import { lucideSearch } from '@ng-icons/lucide';
   selector: 'gfd-header',
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
-  imports: [Input, Button, NgIcon],
+  imports: [Input, Button, NgIcon, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {

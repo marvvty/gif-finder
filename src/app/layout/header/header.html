@@ -1,9 +1,15 @@
-<form class="header" (submit)="onSubmit($event)">
-  <gfd-input
-    placeholder="Search for gifs"
-    [(value)]="searchTerm"
-    [invalid]="invalid()"
-    [touched]="isSubmited()"
-  />
-  <gfd-button type="submit"><ng-icon [svg]="svg"></ng-icon></gfd-button>
-</form>
+<div class="header">
+  <a class="header__logo" routerLink="/">
+    <img src="/logo/logo.svg" alt="GIF Finder Logo" />
+  </a>
+  <form class="form" (submit)="onSubmit($event)">
+    <gfd-input
+      class="form__input"
+      placeholder="Search for gifs"
+      [(value)]="searchTerm"
+      [invalid]="invalid()"
+      [touched]="isSubmited()"
+    />
+    <gfd-button type="submit"><ng-icon [svg]="svg"></ng-icon></gfd-button>
+  </form>
+</div>

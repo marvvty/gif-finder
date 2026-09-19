@@ -7,5 +7,24 @@
   padding: 1rem 3rem;
   justify-content: center;
   gap: $spacing-md;
+  width: 72%;
+
+  &__logo {
+    display: block;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-sm;
   width: 100%;
+  max-width: 800px;
+
+  &__input {
+    flex: 1;
+  }
 }
