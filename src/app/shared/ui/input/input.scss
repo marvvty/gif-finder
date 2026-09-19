@@ -1,0 +1,29 @@
+@use 'theme' as *;
+
+.input {
+  background-color: #f5f5f5;
+  width: 100%;
+  font-size: $font-size-xs;
+  font-family: $font-family-main;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  padding: 20px 16px;
+  height: 50px;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  &:focus-within,
+  &:not(:placeholder-shown) {
+    border: 1px solid #111;
+  }
+
+  &--invalid,
+  &--invalid:hover,
+  &--invalid:focus-within,
+  &--invalid:not(:placeholder-shown) {
+    border-color: $error;
+  }
+}
